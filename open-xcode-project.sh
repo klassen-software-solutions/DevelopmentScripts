@@ -26,18 +26,23 @@ else
         echo "Found exactly one project, opening $fn"
         open "$fn"
     else
-        echo "No project found, opening everything"
-        cd "$dir"
-        files=$(find . -maxdepth 1 -type f -not -path '*/\.*' -not -name '*.png' | sort)
-        dirs=$(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' | sort)
-        if [ -d .github ]; then
-            dirs=".github $dirs"
-        fi
-        echo "$files"
-        echo "$dirs"
+        if [ -f Package.swift ]; then
+            echo "Found a Swift pacakge file, opening Package.swift"
+            open Package.swift
+        else
+            echo "No project found, opening everything"
+            cd "$dir"
+            files=$(find . -maxdepth 1 -type f -not -path '*/\.*' -not -name '*.png' | sort)
+            dirs=$(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' | sort)
+            if [ -d .github ]; then
+                dirs=".github $dirs"
+            fi
+            echo "$files"
+            echo "$dirs"
 
-        # shellcheck disable=SC2086
-        #   Justification: None of the listed alternatives work in this instance.
-        open -a Xcode $dirs $files
+            # shellcheck disable=SC2086
+            #   Justification: None of the listed alternatives work in this instance.
+            open -a Xcode $dirs $files
+        fi
     fi
 fi
