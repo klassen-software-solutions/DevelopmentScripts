@@ -23,3 +23,14 @@ scripts in this project.
 * _git_: Needed for _git-..._.
 * _Xcode_: Needed for _open-xcode-project.sh_.
 * _pylint_ and _shellcheck_: Needed for the static analysis `make analyze` to work.
+
+## Development Notes
+
+Note that this project differs from the normal KSS standards as it is primarily used internally. In particular,
+we don't use feature branches, unless we are working on something expected to take an extended time.
+Instead the work is done on the development branches.
+
+In addition we don't bother with the pull requests or creating releases. When something is ready to
+be merged, it is merged from development into master, and then tagged appropriately based on
+semantic versioning.
+
