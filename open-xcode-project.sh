@@ -35,7 +35,7 @@ else
             files=$(find . -maxdepth 1 -type f -not -path '*/\.*' -not -name '*.png' | sort)
             dirs=$(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' \
                 -not -name 'build' -not -name 'cmake-build-*' -not -name 'dist' \
-                -not -name '*.egg-info' | sort)
+                -not -name '*.egg-info' -not -name '.logs' | sort)
             if [ -d .github ]; then
                 dirs=".github $dirs"
             fi
