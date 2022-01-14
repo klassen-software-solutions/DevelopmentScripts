@@ -11,15 +11,15 @@ import subprocess
 
 def _run(command: str, directory: str = None):
     logging.debug("running: %s", command)
-    cmd = subprocess.Popen("%s" % command, shell=True, cwd=directory, stdout=subprocess.PIPE)
-    for line in cmd.stdout:
-        print("  %s" % (line.decode("utf-8").strip()))
+    with subprocess.Popen("%s" % command, shell=True, cwd=directory, stdout=subprocess.PIPE) as cmd:
+        for line in cmd.stdout:
+            print("  %s" % (line.decode("utf-8").strip()))
 
 def _process(command: str):
     logging.debug("Processing command: %s", command)
-    res = subprocess.Popen("%s" % command, shell=True,
-                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    return res.stdout
+    with subprocess.Popen("%s" % command, shell=True,
+                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as res:
+        return res.stdout
 
 
 # MARK: Application
