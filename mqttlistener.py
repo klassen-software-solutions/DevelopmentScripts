@@ -18,11 +18,12 @@ import paho.mqtt.client as mqtt
 waiter = threading.Lock()
 waiter.acquire()
 
+
 def _signal_handler(_sig, _frame):
     waiter.release()
 
 
-class MQTTListener():
+class MQTTListener:
     # pylint: disable=too-few-public-methods
     #   Justification: Really only need the one
 
@@ -57,10 +58,11 @@ class MQTTListener():
 
 def _parse_command_line(args: list):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--host', default='localhost', type=str, help='MQTT host')
-    parser.add_argument('--port', default=1883, type=int, help='MQTT port')
-    parser.add_argument('topic', type=str, help='Topic to subscribe')
+    parser.add_argument("--host", default="localhost", type=str, help="MQTT host")
+    parser.add_argument("--port", default=1883, type=int, help="MQTT port")
+    parser.add_argument("topic", type=str, help="Topic to subscribe")
     return parser.parse_args(args)
+
 
 def run(args: list = None):
     options = _parse_command_line(args)
@@ -76,5 +78,6 @@ def run(args: list = None):
         waiter.release()
 
     listener.stop()
+
 
 run()
