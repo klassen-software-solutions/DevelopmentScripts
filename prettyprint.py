@@ -60,7 +60,7 @@ def _main():
     output_stream = None if args.quiet else sys.stdout
     error_stream = sys.stderr if args.show_errors else None
     ret = pretty_print(sys.stdin, output_stream, error_stream)
-    if (args.validate or args.show_errors) and (ret == False):
+    if (args.validate or args.show_errors) and (not ret):
         sys.exit(1)
 
 if __name__ == '__main__':

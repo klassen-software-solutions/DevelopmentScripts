@@ -11,13 +11,13 @@ import subprocess
 
 def _run(command: str, directory: str = None):
     logging.debug("running: %s", command)
-    with subprocess.Popen("%s" % command, shell=True, cwd=directory, stdout=subprocess.PIPE) as cmd:
+    with subprocess.Popen(f"{command}", shell=True, cwd=directory, stdout=subprocess.PIPE) as cmd:
         for line in cmd.stdout:
-            print("  %s" % (line.decode("utf-8").strip()))
+            print(f"  {line.decode('utf-8').strip()}")
 
 def _process(command: str):
     logging.debug("Processing command: %s", command)
-    with subprocess.Popen("%s" % command, shell=True,
+    with subprocess.Popen(f"{command}", shell=True,
                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as res:
         return res.stdout
 
@@ -29,7 +29,7 @@ def _remove_exited_processes():
     for line in _process('docker ps --all -q -f status=exited'):
         items = line.decode("utf-8").split()
         for item in items:
-            print("  removing: %s" % (item))
+            print(f"  removing: {item}")
             subprocess.check_output(['docker', 'rm', item])
 
 def _remove_old_container_versions():
@@ -48,11 +48,11 @@ def _remove_old_container_versions():
 
         image_id = entry[2]
         if name in images:
-            print("  removing %s:%s (%s)" % (name, tag, image_id))
+            print(f"  removing {name}:{tag} ({image_id})")
             try:
                 subprocess.check_output(['docker', 'image', 'rm', image_id])
             except subprocess.CalledProcessError:
-                print("    WARNING: could not remove image %s" % (image_id))
+                print(f"    WARNING: could not remove image {image_id}")
         else:
             images[name] = image_id
 
