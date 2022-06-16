@@ -53,7 +53,10 @@ class MQTTListener:
                 payload = json.loads(msg.payload)
             print(json.dumps(payload, indent=2, sort_keys=True))
         except json.decoder.JSONDecodeError:
-            print("Could not decode payload as JSON, ignoring message")
+            payload = msg.payload.decode("utf-8")
+            print(f"{payload}")
+        except UnicodeDecodeError:
+            print("Could not decode the message")
 
 
 def _parse_command_line(args: list):
