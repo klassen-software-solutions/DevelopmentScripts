@@ -1,0 +1,53 @@
+Add the following section to your .profile...
+
+if [ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash ]; then
+    . /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
+fi
+
+if [ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh ]; then
+    source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
+fi
+
+## Print nickname for git/hg/bzr/svn version control in CWD
+## Optional $1 of format string for printf, default "(%s) "
+function be_get_branch {
+  local dir="$PWD"
+  local vcs
+  local nick
+  while [[ "$dir" != "/" ]]; do
+    for vcs in git hg svn bzr; do
+      if [[ -d "$dir/.$vcs" ]] && hash "$vcs" &>/dev/null; then
+        case "$vcs" in
+          git) __git_ps1 "${1:-(%s) }"; return;;
+          hg) nick=$(hg branch 2>/dev/null);;
+          svn) nick=$(svn info 2>/dev/null\
+                | grep -e '^Working Copy Root Path:'\
+                | sed -e 's#.*/##');;
+          bzr)
+            local conf="${dir}/.bzr/branch/branch.conf" # normal branch
+            [[ -f "$conf" ]] && nick=$(grep -E '^nickname =' "$conf" | cut -d' ' -f 3)
+            conf="${dir}/.bzr/branch/location" # colo/lightweight branch
+            [[ -z "$nick" ]] && [[ -f "$conf" ]] && nick="$(basename "$(< $conf)")"
+            [[ -z "$nick" ]] && nick="$(basename "$(readlink -f "$dir")")";;
+        esac
+        [[ -n "$nick" ]] && printf "${1:-(%s) }" "$nick"
+        return 0
+      fi
+    done
+    dir="$(dirname "$dir")"
+  done
+}
+
+PS1='\h:\W \u$(be_get_branch " (%s)")\$ '
+
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# My programming extensions
+alias xopen='open -a Xcode'
+alias stopen='open -a Sourcetree'
+export PATH="$PATH:/opt/kss/bin:$HOME/bin" # Add local utilities
+export PERL5LIB="/opt/kss/lib/perl5/site_perl"
+

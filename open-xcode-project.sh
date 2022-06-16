@@ -46,12 +46,17 @@ fi
 
 echo "No project found, opening everything"
 cd "$dir"
-files=$(find . -maxdepth 1 -type f -not -path '*/\.*' -not -name '*.png' | sort)
+files=$(find . -maxdepth 1 -type f -not -path '*/\.*' -not -name '*.png' -not -name '*~' \
+    | sort)
 dirs=$(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' \
     -not -name 'build' -not -name 'cmake-build-*' -not -name 'dist' \
-    -not -name '*.egg-info' -not -name '.logs' | sort)
+    -not -name '*.egg-info' -not -name '.logs' \
+    | sort)
 if [ -d .github ]; then
     dirs=".github $dirs"
+fi
+if [ -f .gitignore ]; then
+    files=".gitignore $files"
 fi
 echo "$files"
 echo "$dirs"
