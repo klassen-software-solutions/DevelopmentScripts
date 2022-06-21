@@ -20,9 +20,13 @@ def _run(command: str, directory: str = None):
 def _process(command: str):
     logging.debug("Processing command: %s", command)
     with subprocess.Popen(
-        f"{command}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-    ) as res:
-        return res.stdout
+        "%s" % command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+    ) as pipe:
+        for line in pipe.stdout:
+            yield line.rstrip()
+        pipe.communicate()
+        if pipe.returncode != 0:
+            raise subprocess.CalledProcessError(pipe.returncode, command)
 
 
 # MARK: Application
