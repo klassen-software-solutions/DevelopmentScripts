@@ -20,7 +20,7 @@ def _run(command: str, directory: str = None):
 def _process(command: str):
     logging.debug("Processing command: %s", command)
     with subprocess.Popen(
-        "%s" % command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+        f"{command}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     ) as pipe:
         for line in pipe.stdout:
             yield line.rstrip()
