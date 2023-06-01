@@ -20,5 +20,5 @@ while :; do
     clear
     date
     $command
-    sleep $duration
+    sleep "$duration"
 done
