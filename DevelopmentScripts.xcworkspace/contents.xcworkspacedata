@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:BashSetup">
+   </FileRef>
+   <FileRef
+      location = "group:dockerclean.py">
+   </FileRef>
+   <FileRef
+      location = "group:git-recurse.sh">
+   </FileRef>
+   <FileRef
+      location = "group:git-set-local-user.sh">
+   </FileRef>
+   <FileRef
+      location = "group:LICENSE">
+   </FileRef>
+   <FileRef
+      location = "group:logo.png">
+   </FileRef>
+   <FileRef
+      location = "group:Makefile">
+   </FileRef>
+   <FileRef
+      location = "group:mqttlistener.py">
+   </FileRef>
+   <FileRef
+      location = "group:open-xcode-project.sh">
+   </FileRef>
+   <FileRef
+      location = "group:prettyprint.py">
+   </FileRef>
+   <FileRef
+      location = "group:pyproject.toml">
+   </FileRef>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <FileRef
+      location = "group:set-links.sh">
+   </FileRef>
+   <FileRef
+      location = "group:watch.sh">
+   </FileRef>
+</Workspace>
